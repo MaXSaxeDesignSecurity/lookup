@@ -33,7 +33,8 @@ Example:
 
 ~/g/g/s/g/k/lookup ❯❯❯ lookup ip 172.217.0.46
 Address: 	172.217.0.46
-Name: 	google.com`,
+Name: 	google.com
+`,
 	Run: func(cmd *cobra.Command, args []string) {
 		for _, addr := range args {
 			names, err := net.LookupAddr(addr)
