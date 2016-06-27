@@ -22,6 +22,28 @@ Nameserver: 	ns2.google.com.
 Nameserver: 	ns1.google.com.
 Nameserver: 	ns4.google.com.
 
+~/g/g/s/g/k/lookup ❯❯❯ lookup service telnet
+TCP Service: 	telnet
+TCP Port: 	23
+UDP Service: 	telnet
+UDP Port: 	23
+
+~/g/g/s/g/k/lookup ❯❯❯ lookup service -t telnet
+TCP Service: 	telnet
+TCP Port: 	23
+
+~/g/g/s/g/k/lookup ❯❯❯ lookup service --tcp telnet
+TCP Service: 	telnet
+TCP Port: 	23
+
+~/g/g/s/g/k/lookup ❯❯❯ lookup service -u telnet
+UDP Service: 	telnet
+UDP Port: 	23
+
+~/g/g/s/g/k/lookup ❯❯❯ lookup service --udp telnet
+UDP Service: 	telnet
+UDP Port: 	23
+
 ~/g/g/s/g/k/lookup ❯❯❯ lookup tcpservice telnet
 TCP Service: 	telnet
 TCP Port: 	23
