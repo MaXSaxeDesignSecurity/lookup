@@ -22,7 +22,15 @@ Nameserver: 	ns2.google.com.
 Nameserver: 	ns1.google.com.
 Nameserver: 	ns4.google.com.
 
+~/g/g/s/g/k/lookup ❯❯❯ lookup tcpsrv telnet
+TCP Service: 	telnet
+TCP Port: 	23
+
 ~/g/g/s/g/k/lookup ❯❯❯ lookup txt google.com
 Name: 	google.com
 TXT: 	v=spf1 include:_spf.google.com ~all
+
+~/g/g/s/g/k/lookup ❯❯❯ lookup udpsrv telnet
+UDP Service: 	telnet
+UDP Port: 	23
 ```
