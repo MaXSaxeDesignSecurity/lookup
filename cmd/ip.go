@@ -16,7 +16,6 @@ package cmd
 
 import (
 	"fmt"
-	"log"
 	"net"
 
 	"github.com/spf13/cobra"
@@ -39,24 +38,23 @@ Name: 	google.com
 		for _, addr := range args {
 			names, err := net.LookupAddr(addr)
 			if err != nil {
-				log.Panicln(err)
-			}
-
-			fmt.Printf("Address: \t%s\n", addr)
-			for _, name := range names {
-				fmt.Printf("Name: \t%s\n", name)
-				addrs, _ := net.LookupHost(name)
-				if len(addrs) > 1 {
-					fmt.Println()
-					for _, adaddr := range addrs {
-						if adaddr == addr {
-							continue
+				fmt.Println(err)
+			} else {
+				fmt.Printf("Address: \t%s\n", addr)
+				for _, name := range names {
+					fmt.Printf("Name: \t%s\n", name)
+					addrs, _ := net.LookupHost(name)
+					if len(addrs) > 1 {
+						fmt.Println()
+						for _, adaddr := range addrs {
+							if adaddr == addr {
+								continue
+							}
+							fmt.Printf("Additional address: \t%s\n", adaddr)
 						}
-						fmt.Printf("Additional address: \t%s\n", adaddr)
 					}
 				}
 			}
-
 		}
 	},
 }
