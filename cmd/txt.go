@@ -21,42 +21,44 @@ import (
 	"github.com/spf13/cobra"
 )
 
-// cnameCmd represents the cname command
-var cnameCmd = &cobra.Command{
-	Use:   "cname",
-	Short: "Lookup canonical DNS host for a name",
-	Long: `This command looks up the canonical DNS host for a name.
+// txtCmd represents the txt command
+var txtCmd = &cobra.Command{
+	Use:   "txt",
+	Short: "Lookup TXT records for a given domain",
+	Long: `Looks up the DNS TXT records for the given domain name.
 
 Example:
 
-~/g/g/s/g/k/lookup ❯❯❯ lookup cname google.com
+~/g/g/s/g/k/lookup ❯❯❯ lookup txt google.com
 Name: 	google.com
-Canonical Name: 	google.com.
+TXT: 	v=spf1 include:_spf.google.com ~all
 `,
 	Run: func(cmd *cobra.Command, args []string) {
 		for _, host := range args {
-			cname, err := net.LookupCNAME(host)
+			txts, err := net.LookupTXT(host)
 			if err != nil {
 				fmt.Println(err)
 			} else {
 				fmt.Printf("Name: \t%s\n", host)
-				fmt.Printf("Canonical Name: \t%s\n", cname)
+				for _, txt := range txts {
+					fmt.Printf("TXT: \t%s\n", txt)
+				}
 			}
 		}
 	},
 }
 
 func init() {
-	RootCmd.AddCommand(cnameCmd)
+	RootCmd.AddCommand(txtCmd)
 
 	// Here you will define your flags and configuration settings.
 
 	// Cobra supports Persistent Flags which will work for this command
 	// and all subcommands, e.g.:
-	// cnameCmd.PersistentFlags().String("foo", "", "A help for foo")
+	// txtCmd.PersistentFlags().String("foo", "", "A help for foo")
 
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
-	// cnameCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	// txtCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 
 }
