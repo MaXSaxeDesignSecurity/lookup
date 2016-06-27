@@ -21,42 +21,42 @@ import (
 	"github.com/spf13/cobra"
 )
 
-// tcpsrvCmd represents the tcpsrv command
-var tcpsrvCmd = &cobra.Command{
-	Use:   "tcpsrv",
-	Short: "Lookup TCP Service Port",
+// udpsrvCmd represents the udpsrv command
+var udpsrvCmd = &cobra.Command{
+	Use:   "udpservice",
+	Short: "Lookup UDP Service Port",
 	Long: `Looks up the port for a TCP service.
 
 Example:
 
-~/g/g/s/g/k/lookup ❯❯❯ lookup tcpsrv telnet
-TCP Service: 	telnet
-TCP Port: 	23
+~/g/g/s/g/k/lookup ❯❯❯ lookup udpservice telnet
+UDP Service: 	telnet
+UDP Port: 	23
 `,
 	Run: func(cmd *cobra.Command, args []string) {
 		for _, service := range args {
-			port, err := net.LookupPort("tcp", service)
+			port, err := net.LookupPort("udp", service)
 			if err != nil {
 				fmt.Println(err)
 			} else {
-				fmt.Printf("TCP Service: \t%s\n", service)
-				fmt.Printf("TCP Port: \t%d\n", port)
+				fmt.Printf("UDP Service: \t%s\n", service)
+				fmt.Printf("UDP Port: \t%d\n", port)
 			}
 		}
 	},
 }
 
 func init() {
-	RootCmd.AddCommand(tcpsrvCmd)
+	RootCmd.AddCommand(udpsrvCmd)
 
 	// Here you will define your flags and configuration settings.
 
 	// Cobra supports Persistent Flags which will work for this command
 	// and all subcommands, e.g.:
-	// tcpsrvCmd.PersistentFlags().String("foo", "", "A help for foo")
+	// udpsrvCmd.PersistentFlags().String("foo", "", "A help for foo")
 
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
-	// tcpsrvCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	// udpsrvCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 
 }
