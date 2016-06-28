@@ -22,6 +22,12 @@ Nameserver: 	ns2.google.com.
 Nameserver: 	ns1.google.com.
 Nameserver: 	ns4.google.com.
 
+~/g/g/s/g/k/lookup ❯❯❯ lookup port 179
+UDP Port: 179
+UDP Service: bgp
+TCP Port: 179
+TCP Service: bgp
+
 ~/g/g/s/g/k/lookup ❯❯❯ lookup service telnet
 TCP Service: 	telnet
 TCP Port: 	23

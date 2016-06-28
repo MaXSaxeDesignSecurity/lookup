@@ -29,7 +29,7 @@ var (
 // serviceCmd represents the service command
 var serviceCmd = &cobra.Command{
 	Use:   "service",
-	Short: "A brief description of your command",
+	Short: "Looks up the port for a named service",
 	Long: `Looks up the port for a service.
 
 Example:

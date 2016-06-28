@@ -20,25 +20,26 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+	"strconv"
 	"strings"
 
 	"github.com/spf13/cobra"
 )
 
-var serviceport = map[string]map[int]string{
-	"tcp": {80: "http"},
-}
-
 // portCmd represents the port command
 var portCmd = &cobra.Command{
 	Use:   "port",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
+	Short: "Looks up a service for a numbered port",
+	Long: `Looks up the service for a numbered port.
 
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+Example:
+
+~/g/g/s/g/k/lookup ❯❯❯ lookup port 23
+TCP Port: 	23
+TCP Service: 	telnet
+UDP Port: 	23
+UDP Service: 	telnet
+`,
 	Run: func(cmd *cobra.Command, args []string) {
 		file, err := os.Open("/etc/services")
 		if err != nil {
@@ -48,8 +49,7 @@ to quickly create a Cobra application.`,
 		defer file.Close()
 
 		scanner := bufio.NewScanner(file)
-		for _, servicename := range args {
-			fmt.Printf("Service: %s\n", servicename)
+		for _, serviceport := range args {
 			found := false
 			for scanner.Scan() {
 				// "http 80/tcp www www-http # World Wide Web HTTP"
@@ -64,23 +64,26 @@ to quickly create a Cobra application.`,
 					continue
 				}
 
-				if servicename == f[0] {
+				portnet := f[1] // "80/tcp"
+				port, offset, ok := dtoi(portnet, 0)
+				if !ok ||
+					port <= 0 ||
+					offset >= len(portnet) ||
+					portnet[offset] != '/' {
+					continue
+				}
+				network := portnet[offset+1 : offset+4] // "tcp"
 
-					portnet := f[1] // "80/tcp"
-					port, offset, ok := dtoi(portnet, 0)
-					if !ok ||
-						port <= 0 ||
-						offset >= len(portnet) ||
-						portnet[offset] != '/' {
-						continue
-					}
-					network := portnet[offset+1 : offset+4] // "tcp"
+				portStr := strconv.Itoa(port)
+
+				if portStr == serviceport {
 					found = true
 					fmt.Printf("%s Port: %d\n", strings.ToUpper(string(network)), port)
+					fmt.Printf("%s Service: %s\n", strings.ToUpper(string(network)), f[0])
 				}
 			}
 			if !found {
-				fmt.Println("No service port found")
+				fmt.Printf("No service found for port %s\n", serviceport)
 			}
 		}
 	},
